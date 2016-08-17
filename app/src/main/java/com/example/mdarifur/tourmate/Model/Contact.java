@@ -11,6 +11,21 @@ public class Contact {
     private String phoneNub;
     private String emailId;
 
+    public Contact(int id, String name, String photo, String phoneNub, String emailId) {
+        this.id = id;
+        this.name = name;
+        this.photo = photo;
+        this.phoneNub = phoneNub;
+        this.emailId = emailId;
+    }
+
+    public Contact(String name, String password, String photo, String phoneNub, String emailId) {
+        this.name = name;
+        this.password = password;
+        this.photo = photo;
+        this.phoneNub = phoneNub;
+        this.emailId = emailId;
+    }
 
     public int getId() {
         return id;
@@ -61,22 +76,6 @@ public class Contact {
     }
 
 
-    public Contact(int id, String name, String password, String photo, String phoneNub, String emailId) {
-        this.id=id;
-        this.name = name;
-        this.password = password;
-        this.photo = photo;
-        this.phoneNub = phoneNub;
-        this.emailId = emailId;
-    }
-
-    public Contact(int id, String phoneNub, String photo, String password, String name) {
-        this.id=id;
-        this.phoneNub = phoneNub;
-        this.photo = photo;
-        this.password = password;
-        this.name = name;
-    }
 
     public Contact() {
 

@@ -9,7 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mdarifur.tourmate.Signup_activity">
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -17,93 +16,102 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:src="@drawable/profile"
+                app:civ_border_width="2dp"
+                android:layout_marginBottom="15sp"
+                app:civ_border_color="#FF000000"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Username:"
+                    android:layout_marginRight="10sp"
                     android:textColor="#000000"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="5.4"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Password:"
                     android:textColor="#000000"
-                    android:textSize="25sp" />
+                    android:layout_marginRight="12sp"
+                    android:textSize="22sp" />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:textSize="25sp" />
+                    android:layout_weight="5.4"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Email:"
-                    android:textColor="#000000"
-                    android:textSize="25sp" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.1"
-                    android:textSize="25sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Phone:"
+                    android:text="Email:"
+                    android:layout_marginRight="55sp"
                     android:textColor="#000000"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.3"
-                    android:textSize="25sp" />
+                    android:layout_weight="5.4"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone:"
+                    android:layout_marginRight="50sp"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5.4"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +127,7 @@
                     android:layout_weight="1"
                     android:text="Photo:"
                     android:textColor="#000000"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="100sp"
@@ -132,6 +140,7 @@
                 <ImageView
                     android:layout_width="100sp"
                     android:layout_height="70sp"
+                    android:onClick="PickFromGallery"
                     android:src="@drawable/gallery"
                     android:textSize="25sp" />
             </LinearLayout>
@@ -149,4 +158,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

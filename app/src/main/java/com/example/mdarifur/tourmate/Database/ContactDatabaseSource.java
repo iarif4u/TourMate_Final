@@ -51,17 +51,16 @@ public class ContactDatabaseSource {
         this.open();
 
         Cursor cursor=database.query(DatabaseHelper.TABLE_CONTACT,new String[]{DatabaseHelper.clint_id,DatabaseHelper.clint_name,
-                DatabaseHelper.clint_password,DatabaseHelper.clint_photo,DatabaseHelper.clint_phoneNub},DatabaseHelper.clint_id+" = "+id,null,null,null,null);
+                DatabaseHelper.clint_password,DatabaseHelper.clint_photo,DatabaseHelper.clint_phoneNub,DatabaseHelper.clint_emailId},DatabaseHelper.clint_id+" = "+id,null,null,null,null);
 
         cursor.moveToFirst();
         int mId=cursor.getInt(cursor.getColumnIndex(DatabaseHelper.clint_id));
         String mName=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_name));
-        String mPhone=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_password));
         String mPhoto=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_photo));
         String mPhoneNuub=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_phoneNub));
-
+        String mEmail=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_emailId));
         cursor.close();
-        contact=new Contact(mId,mName,mPhone,mPhoto,mPhoneNuub);
+        contact=new Contact(mId,mName,mPhoto,mPhoneNuub,mEmail);
         this.close();
         return contact;
     }
