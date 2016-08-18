@@ -9,26 +9,50 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mdarifur.tourmate.FileOperation.FileSystem;
 
 public class Signup_activity extends AppCompatActivity {
-    private boolean isCamera;
+    private boolean isCamera,result;
     private FileSystem fileSystem;
+    private Is_Valid isValid;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int RESULT_LOAD_IMAGE = 1;
-    ImageView profile_image;
-    Bitmap profileIMG = null;
-    String imageName = "";
+    private EditText usernameET,passwordET,emailET,phoneET;
+    private String userName,email,passWord,phone,imageName;
+    private ImageView profile_image;
+    private Bitmap bitmapImg = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_activity);
-        profile_image = (ImageView) findViewById(R.id.profile_image);
-        fileSystem = new FileSystem(this);
+        getFieldVariable();
     }
+
+    private void getFieldVariable() {
+        fileSystem = new FileSystem(this);
+        isValid = new Is_Valid(this);
+        usernameET = (EditText) findViewById(R.id.usernameET);
+        passwordET = (EditText) findViewById(R.id.passwordET);
+        emailET = (EditText) findViewById(R.id.emailET);
+        phoneET = (EditText) findViewById(R.id.phoneET);
+        profile_image = (ImageView) findViewById(R.id.profile_image);
+    }
+    private void setValue() {
+        userName = usernameET.getText().toString();
+        passWord = passwordET.getText().toString();
+        email    = emailET.getText().toString();
+        phone    = phoneET.getText().toString();
+        if(bitmapImg==null){
+            imageName = null;
+        }else{
+            imageName = fileSystem.saveToInternalStorage(bitmapImg);
+        }
+    }
+
     public void ImageCapture(View view) {
         isCamera = true;
 
@@ -43,8 +67,8 @@ public class Signup_activity extends AppCompatActivity {
         if (isCamera == true) {
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
-                profileIMG = (Bitmap) extras.get("data");
-                profile_image.setImageBitmap(profileIMG);
+                bitmapImg = (Bitmap) extras.get("data");
+                profile_image.setImageBitmap(ImageResize.scaleDown(bitmapImg,620,true));
             }
         } else {
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
@@ -57,10 +81,8 @@ public class Signup_activity extends AppCompatActivity {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);
                 cursor.close();
-                profileIMG = BitmapFactory.decodeFile(picturePath);
-                profileIMG =ImageResize.scaleDown(profileIMG,620,true);
-                //Toast.makeText(Signup_activity.this, String.valueOf(profileIMG.getWidth()), Toast.LENGTH_LONG).show();
-                profile_image.setImageBitmap(profileIMG);
+                bitmapImg = BitmapFactory.decodeFile(picturePath);
+                profile_image.setImageBitmap(ImageResize.scaleDown(bitmapImg,620,true));
             }
         }
     }
@@ -75,14 +97,11 @@ public class Signup_activity extends AppCompatActivity {
 
 
     public void SaveData(View view) {
-     /*   imageName = fileSystem.saveToInternalStorage(profileIMG);
-        Bitmap b = fileSystem.loadImageFromStorage(imageName);
-
-
-        profile_image.setImageBitmap(b); */
-        Toast.makeText(this, imageName, Toast.LENGTH_SHORT).show();
-
-
+        setValue();
+        result = isValid.CheckData(userName,passWord,email,phone);
+        if(result==true){
+            Toast.makeText(Signup_activity.this, "Everythin is OK", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
