@@ -47,6 +47,7 @@ public class Signup_activity extends AppCompatActivity {
         emergencyET = (EditText) findViewById(R.id.emergencyET);
     }
     private void setValue() {
+        contactDatabaseSource = new ContactDatabaseSource(this);
         userName = usernameET.getText().toString();
         passWord = passwordET.getText().toString();
         email    = emailET.getText().toString();
@@ -106,10 +107,15 @@ public class Signup_activity extends AppCompatActivity {
         setValue();
         result = isValid.CheckData(userName,passWord,email,phone);
         if(result==true){
-            contact = new Contact(userName, passWord, imageName, phone, email,emergency);
-            contactDatabaseSource = new ContactDatabaseSource(this);
-            boolean result_show = contactDatabaseSource.addContact(contact);
-            Toast.makeText(Signup_activity.this, String.valueOf(result_show), Toast.LENGTH_SHORT).show();
+            if(contactDatabaseSource.IsUserExit(userName)==true){
+                Toast.makeText(Signup_activity.this, "Username already use", Toast.LENGTH_SHORT).show();
+            }else if(contactDatabaseSource.IsMailExit(email)==true){
+                Toast.makeText(Signup_activity.this, "Email already use", Toast.LENGTH_SHORT).show();
+            }else {
+                contact = new Contact(userName, passWord, imageName, phone, email, emergency);
+                boolean result_show = contactDatabaseSource.addContact(contact);
+                Toast.makeText(Signup_activity.this, String.valueOf(result_show), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

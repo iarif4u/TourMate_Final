@@ -47,6 +47,27 @@ public class ContactDatabaseSource {
             return false;
         }
     }
+
+    public boolean IsUserExit(String userName) {
+        this.open();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+DatabaseHelper.TABLE_CONTACT+" WHERE "+DatabaseHelper.clint_name+" = ?", new String[]{userName});
+        if (cursor.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean IsMailExit(String email) {
+        this.open();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+DatabaseHelper.TABLE_CONTACT+" WHERE "+DatabaseHelper.clint_emailId+" = ?", new String[]{email});
+        if (cursor.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public Contact Login(String userName, String passWord) {
         this.open();
         Cursor cursor = database.rawQuery("SELECT * FROM "+DatabaseHelper.TABLE_CONTACT+" WHERE "+DatabaseHelper.clint_name+" = ? AND "+DatabaseHelper.clint_password+" = ?", new String[]{userName, passWord});
