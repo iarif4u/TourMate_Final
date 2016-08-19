@@ -37,6 +37,7 @@ public class ContactDatabaseSource {
         contentValues.put(DatabaseHelper.clint_photo,contact.getPhoto());
         contentValues.put(DatabaseHelper.clint_phoneNub,contact.getPhoneNub());
         contentValues.put(DatabaseHelper.clint_emailId,contact.getEmailId());
+        contentValues.put(DatabaseHelper.clint_emerzencyPhnoeNub,contact.getEmerzencyPhnoeNub());
 
         long inserted=database.insert(DatabaseHelper.TABLE_CONTACT,null,contentValues);
         this.close();
@@ -59,12 +60,14 @@ public class ContactDatabaseSource {
         String mPhoto=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_photo));
         String mPhoneNuub=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_phoneNub));
         String mEmail=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_emailId));
+        String memerzencyNub=cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_emailId));
         cursor.close();
-        contact=new Contact(mId,mName,mPhoto,mPhoneNuub,mEmail);
+        contact=new Contact(mId,mName,mPhoto,mPhoneNuub,mEmail,memerzencyNub);
         this.close();
         return contact;
     }
 
+    /*
     public ArrayList<Contact> getAllContact(){
         ArrayList<Contact>contacts=new ArrayList<>();
         this.open();
@@ -88,7 +91,7 @@ public class ContactDatabaseSource {
         cursor.close();
         this.close();
         return contacts;
-    }
+    } */
 
     public boolean updateContact(int id,Contact contact){
         this.open();

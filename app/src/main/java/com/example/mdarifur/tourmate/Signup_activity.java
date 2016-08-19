@@ -13,16 +13,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.mdarifur.tourmate.Database.ContactDatabaseSource;
 import com.example.mdarifur.tourmate.FileOperation.FileSystem;
+import com.example.mdarifur.tourmate.Model.Contact;
 
 public class Signup_activity extends AppCompatActivity {
-    private boolean isCamera,result;
+    private Contact contact;
+    private ContactDatabaseSource contactDatabaseSource;
     private FileSystem fileSystem;
     private Is_Valid isValid;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int RESULT_LOAD_IMAGE = 1;
-    private EditText usernameET,passwordET,emailET,phoneET;
-    private String userName,email,passWord,phone,imageName;
+    private boolean isCamera,result;
+    private EditText usernameET,passwordET,emailET,phoneET,emergencyET;
+    private String userName,email,passWord,phone,imageName,emergency;
     private ImageView profile_image;
     private Bitmap bitmapImg = null;
     @Override
@@ -40,12 +44,14 @@ public class Signup_activity extends AppCompatActivity {
         emailET = (EditText) findViewById(R.id.emailET);
         phoneET = (EditText) findViewById(R.id.phoneET);
         profile_image = (ImageView) findViewById(R.id.profile_image);
+        emergencyET = (EditText) findViewById(R.id.emergencyET);
     }
     private void setValue() {
         userName = usernameET.getText().toString();
         passWord = passwordET.getText().toString();
         email    = emailET.getText().toString();
         phone    = phoneET.getText().toString();
+        emergency    = emergencyET.getText().toString();
         if(bitmapImg==null){
             imageName = null;
         }else{
@@ -100,7 +106,10 @@ public class Signup_activity extends AppCompatActivity {
         setValue();
         result = isValid.CheckData(userName,passWord,email,phone);
         if(result==true){
-            Toast.makeText(Signup_activity.this, "Everythin is OK", Toast.LENGTH_LONG).show();
+            contact = new Contact(userName, passWord, imageName, phone, email,emergency);
+            contactDatabaseSource = new ContactDatabaseSource(this);
+            boolean result_show = contactDatabaseSource.addContact(contact);
+            Toast.makeText(Signup_activity.this, String.valueOf(result_show), Toast.LENGTH_SHORT).show();
         }
     }
 

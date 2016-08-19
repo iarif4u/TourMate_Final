@@ -32,11 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     static final String clintEvent_id="id";
 
 
-
-    static final String Create_Claint_Table="create table "+TABLE_CONTACT+"( "+clint_id+"Primary key "+clint_name+"text "+clint_password+"text "+clint_photo+"text "
-            +clint_phoneNub+"text"+clint_emerzencyPhnoeNub+"text"+clint_emailId+"text);";
-
-
+    public static final String Create_Claint_Table = "CREATE TABLE "+TABLE_CONTACT+"( "+clint_id+" integer PRIMARY KEY, "+clint_name+" text, "+clint_password+" text, "+clint_photo+" text, "+clint_phoneNub+" text, "+clint_emerzencyPhnoeNub+" text, "+clint_emailId+" text);";
 
     static final String Create_Event_Table="create event table "+TABLE_EventContact+"( "+event_id+"primary key "+event_name+"text "+from+"text "
             +to+"text "+start_journey+"text "+end_journey+"text "+event_Timeline+"text " +clintEvent_id+"Secondary key "+event_Budget+"text);";
@@ -51,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         sqLiteDatabase.execSQL(Create_Claint_Table);
-        sqLiteDatabase.execSQL(Create_Event_Table);
+//        sqLiteDatabase.execSQL(Create_Event_Table);
 
 
     }
