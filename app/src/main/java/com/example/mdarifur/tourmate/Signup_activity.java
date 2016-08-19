@@ -106,11 +106,21 @@ public class Signup_activity extends AppCompatActivity {
     public void SaveData(View view) {
         setValue();
         result = isValid.CheckData(userName,passWord,email,phone);
+        String resultinfo ="";
+        boolean isLog = false;
         if(result==true){
             if(contactDatabaseSource.IsUserExit(userName)==true){
-                Toast.makeText(Signup_activity.this, "Username already use", Toast.LENGTH_SHORT).show();
-            }else if(contactDatabaseSource.IsMailExit(email)==true){
-                Toast.makeText(Signup_activity.this, "Email already use", Toast.LENGTH_SHORT).show();
+                isLog = true;
+                resultinfo = resultinfo+"Usename ";
+            }
+            if(contactDatabaseSource.IsMailExit(email)==true){
+                isLog = true;
+                resultinfo = resultinfo+"Email ";
+            }
+            if (isLog==true){
+                isLog = false;
+                Toast.makeText(Signup_activity.this, resultinfo+"already used", Toast.LENGTH_SHORT).show();
+                resultinfo = "";
             }else {
                 contact = new Contact(userName, passWord, imageName, phone, email, emergency);
                 boolean result_show = contactDatabaseSource.addContact(contact);
