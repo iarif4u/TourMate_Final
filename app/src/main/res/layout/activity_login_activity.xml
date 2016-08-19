@@ -18,15 +18,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:text="Username:"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:textSize="25sp"
             android:textColor="#000000"
             android:layout_height="wrap_content" />
         <EditText
             android:layout_width="wrap_content"
+            android:id="@+id/usernameLET"
             android:textSize="25sp"
-            android:hint="Enter Username"
-            android:layout_weight="3"
+            android:layout_weight="10"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
@@ -38,15 +38,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:text="Password:"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:textSize="25sp"
             android:textColor="#000000"
             android:layout_height="wrap_content" />
         <EditText
             android:layout_width="wrap_content"
             android:textSize="25sp"
-            android:hint="Enter Password"
-            android:layout_weight="3"
+            android:id="@+id/passwordLET"
+            android:inputType="textPassword"
+            android:layout_weight="10"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <Button
@@ -54,6 +55,7 @@
         android:text="Login"
         android:textSize="25sp"
         android:textAllCaps="false"
+        android:onClick="LoginUser"
         android:layout_height="wrap_content" />
     <LinearLayout
         android:orientation="horizontal"

@@ -47,7 +47,26 @@ public class ContactDatabaseSource {
             return false;
         }
     }
+    public Contact Login(String userName, String passWord) {
+        this.open();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+DatabaseHelper.TABLE_CONTACT+" WHERE "+DatabaseHelper.clint_name+" = ? AND "+DatabaseHelper.clint_password+" = ?", new String[]{userName, passWord});
+        if (cursor.getCount() > 0){
+            cursor.moveToFirst();
+            int mId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.clint_id));
+            String mName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_name));
+            String mPhoto = cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_photo));
+            String mPhoneNuub = cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_phoneNub));
+            String mEmail = cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_emailId));
+            String memerzencyNub = cursor.getString(cursor.getColumnIndex(DatabaseHelper.clint_emailId));
+            contact=new Contact(mId,mName,mPhoto,mPhoneNuub,mEmail,memerzencyNub);
+        }else{
+            contact =null;
+        }
 
+        cursor.close();
+        this.close();
+        return contact;
+    }
     public Contact getContact(int id){
         this.open();
 
@@ -91,8 +110,8 @@ public class ContactDatabaseSource {
         cursor.close();
         this.close();
         return contacts;
-    } */
-
+    }
+        */
     public boolean updateContact(int id,Contact contact){
         this.open();
 
