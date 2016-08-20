@@ -124,9 +124,11 @@ public class Signup_activity extends AppCompatActivity {
             }else {
                 contact = new Contact(userName, passWord, imageName, phone, email, emergency);
                 boolean result_show = contactDatabaseSource.addContact(contact);
-                Toast.makeText(Signup_activity.this, String.valueOf(result_show), Toast.LENGTH_SHORT).show();
+                if(result_show==true){
+                    Toast.makeText(Signup_activity.this, "Registration Success", Toast.LENGTH_SHORT).show();
+                    Intent signup = new Intent(this,Login_activity.class);
+                }
             }
         }
     }
-
 }
