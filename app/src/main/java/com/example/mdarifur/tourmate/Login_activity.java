@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mdarifur.tourmate.Constant.Constant;
 import com.example.mdarifur.tourmate.Database.ContactDatabaseSource;
 import com.example.mdarifur.tourmate.Model.Contact;
 
 public class Login_activity extends AppCompatActivity {
+    public Preference preference;
     private EditText usernameLET,passwordLET;
     private String usernameLI,passwordLI;
     private ContactDatabaseSource contactDatabaseSource;
@@ -37,9 +39,18 @@ public class Login_activity extends AppCompatActivity {
         setVariable();
         contact=contactDatabaseSource.Login(usernameLI,passwordLI);
         if(contact==null){
-            Toast.makeText(Login_activity.this, "Wrong Username or Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login_activity.this, "Username or Password doesn't match", Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(Login_activity.this, contact.getEmailId(), Toast.LENGTH_SHORT).show();
+            preference = new Preference(this);
+            preference.saveUserData(Constant.ID, contact.getId());
+            preference.saveUserData(Constant.EMAIL,contact.getEmailId());
+            preference.saveUserData(Constant.NAME,contact.getName());
+            preference.saveUserData(Constant.PHONE,contact.getPhoneNub());
+            preference.saveUserData(Constant.IMAGE,contact.getPhoto());
+            preference.saveUserData(Constant.EMERZENCY,contact.getEmerzencyPhnoeNub());
+            Toast.makeText(Login_activity.this, "Login Success", Toast.LENGTH_SHORT).show();
+            Intent loginSuccess = new Intent(this,MainActivity.class);
+            startActivity(loginSuccess);
         }
 
     }
