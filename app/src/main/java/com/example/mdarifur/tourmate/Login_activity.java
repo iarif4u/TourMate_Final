@@ -48,8 +48,8 @@ public class Login_activity extends AppCompatActivity {
             preference.saveUserData(Constant.PHONE,contact.getPhoneNub());
             preference.saveUserData(Constant.IMAGE,contact.getPhoto());
             preference.saveUserData(Constant.EMERZENCY,contact.getEmerzencyPhnoeNub());
-            Toast.makeText(Login_activity.this, "Login Success", Toast.LENGTH_SHORT).show();
-            Intent loginSuccess = new Intent(this,MainActivity.class);
+            Toast.makeText(Login_activity.this,"Login Success", Toast.LENGTH_SHORT).show();
+            Intent loginSuccess = new Intent(this,TourMate.class);
             startActivity(loginSuccess);
         }
 
