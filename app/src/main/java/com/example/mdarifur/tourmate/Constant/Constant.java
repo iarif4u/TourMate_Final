@@ -9,6 +9,7 @@ public class Constant {
     public static String FILE_PATH ="/data/data/com.example.mdarifur.tourmate/app_imageDir";
     public static String ID ="id";
     public static String NAME ="name";
+    public static String IS_LOGIN ="login";
     public static String EMAIL ="email";
     public static String PHONE ="phone";
     public static String IMAGE ="image";

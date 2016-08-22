@@ -17,16 +17,22 @@ public class Login_activity extends AppCompatActivity {
     private String usernameLI,passwordLI;
     private ContactDatabaseSource contactDatabaseSource;
     private Contact contact;
+    Intent loginSuccess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
         getVariable();
+        if(preference.getLoginData(Constant.IS_LOGIN)==true){
+            startActivity(loginSuccess);
+        }
     }
 
     private void getVariable() {
         usernameLET = (EditText) findViewById(R.id.usernameLET);
         passwordLET = (EditText) findViewById(R.id.passwordLET);
+        preference = new Preference(this);
+        loginSuccess = new Intent(this,TourMate.class);
     }
 
     public void SignupAcc(View view) {
@@ -41,7 +47,7 @@ public class Login_activity extends AppCompatActivity {
         if(contact==null){
             Toast.makeText(Login_activity.this, "Username or Password doesn't match", Toast.LENGTH_SHORT).show();
         }else {
-            preference = new Preference(this);
+            preference.saveLoginData(Constant.IS_LOGIN,true);
             preference.saveUserData(Constant.ID, contact.getId());
             preference.saveUserData(Constant.EMAIL,contact.getEmailId());
             preference.saveUserData(Constant.NAME,contact.getName());
@@ -49,7 +55,6 @@ public class Login_activity extends AppCompatActivity {
             preference.saveUserData(Constant.IMAGE,contact.getPhoto());
             preference.saveUserData(Constant.EMERZENCY,contact.getEmerzencyPhnoeNub());
             Toast.makeText(Login_activity.this,"Login Success", Toast.LENGTH_SHORT).show();
-            Intent loginSuccess = new Intent(this,TourMate.class);
             startActivity(loginSuccess);
         }
 

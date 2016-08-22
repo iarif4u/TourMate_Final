@@ -50,10 +50,10 @@ public class TourMate extends AppCompatActivity implements NavigationView.OnNavi
         image = preference.getUserData(Constant.IMAGE);
         userNamePro.setText(username);
         emailPro.setText(email);
-        if (!image.equals(null)&&image!="null"&&!image.equals("null")&&image.length()>5) {
+        if(image != null && !image.isEmpty()) {
             profilePhoto.setImageBitmap(FileSystem.decodeBase64(image));
         } else {
-            Log.e(TAG,"Cann't Set the image");
+            Toast.makeText(TourMate.this, "Yet, Profile photo doesn't set", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,5 +98,9 @@ public class TourMate extends AppCompatActivity implements NavigationView.OnNavi
             dl.closeDrawer(GravityCompat.START);
 
         return false;
+    }
+
+    public void addEvent(View view) {
+        Toast.makeText(TourMate.this, "You Click For Add Event", Toast.LENGTH_LONG).show();
     }
 }

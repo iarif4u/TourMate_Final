@@ -23,6 +23,13 @@ public class Preference {
         editor.putString(key,data);
         editor.commit();
     }
+    public void saveLoginData(String key,boolean data) {
+        editor.putBoolean(key,data);
+        editor.commit();
+    }
+    public boolean getLoginData(String key){
+        return sharedPreferences.getBoolean(key,false);
+    }
     public void saveUserData(String key,int data) {
         editor.putString(key,String.valueOf(data));
         editor.commit();
