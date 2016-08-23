@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_menu_1"
         android:icon="@drawable/ic_menu_camera"
-        android:title="New"/>
+        android:title="Event's"/>
     <item android:id="@+id/nav_menu_2"
         android:icon="@drawable/ic_menu_gallery"
-        android:title="Gallery"/>
+        android:title="Weather"/>
 
     <item android:id="@+id/nav_menu_3"
         android:icon="@drawable/ic_menu_share"

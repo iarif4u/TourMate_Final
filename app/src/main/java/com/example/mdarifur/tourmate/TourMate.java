@@ -1,15 +1,17 @@
 package com.example.mdarifur.tourmate;
 
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebViewFragment;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.example.mdarifur.tourmate.Constant.Constant;
 import com.example.mdarifur.tourmate.FileOperation.FileSystem;
 
 public class TourMate extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     ActionBarDrawerToggle toggle;
     TextView userNamePro, emailPro;
     ImageView profilePhoto;
@@ -74,25 +77,19 @@ public class TourMate extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_menu_1:
-                Toast.makeText(TourMate.this, "Nav Menu 1", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_menu_2:
-                Toast.makeText(TourMate.this, "Nav Menu 2", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_menu_3:
-                Toast.makeText(TourMate.this, "Nav Menu 3", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_menu_4:
-                Toast.makeText(TourMate.this, "Nav Menu 4", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_menu_5:
-                Toast.makeText(TourMate.this, "Nav Menu 5", Toast.LENGTH_SHORT).show();
-                break;
+       int id = item.getItemId();
+        if(id == R.id.nav_menu_1){
+            int i = getFragmentManager().beginTransaction().replace(R.id.fragment,new EventsFragment()).commit();
+            Toast.makeText(TourMate.this, String.valueOf(i)+" value", Toast.LENGTH_SHORT).show();
 
+        }else if(id == R.id.nav_menu_2){
+            Toast.makeText(TourMate.this, "Click for Weather", Toast.LENGTH_SHORT).show();
+            getFragmentManager().beginTransaction().replace(R.id.fragment,new WeatherFragment()).commit();
+        }else if(id == R.id.nav_menu_3){
+            Toast.makeText(TourMate.this, "Click for Nothing", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.nav_menu_4){
+            Toast.makeText(TourMate.this, "Click for Nothing", Toast.LENGTH_SHORT).show();
         }
-
         DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (dl.isDrawerOpen(GravityCompat.START))
             dl.closeDrawer(GravityCompat.START);
