@@ -27,7 +27,10 @@
         </activity>
         <activity android:name=".Login_activity" />
         <activity android:name=".Signup_activity" />
-        <activity android:name=".TourMate"></activity>
+        <activity
+            android:name=".Tour_Mate"
+            android:label="@string/title_activity_tour__mate"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

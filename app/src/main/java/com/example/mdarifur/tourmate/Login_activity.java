@@ -32,7 +32,7 @@ public class Login_activity extends AppCompatActivity {
         usernameLET = (EditText) findViewById(R.id.usernameLET);
         passwordLET = (EditText) findViewById(R.id.passwordLET);
         preference = new Preference(this);
-        loginSuccess = new Intent(this,TourMate.class);
+        loginSuccess = new Intent(this,Tour_Mate.class);
     }
 
     public void SignupAcc(View view) {
