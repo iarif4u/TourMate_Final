@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     static final String DATABASE_NAME="contact_manager";
     static final int DATABASE_VERSION=1;
     static final String TABLE_CONTACT="contact_info";
-    static final String TABLE_EventContact="event_Info";
+    static final String TABLE_Event="event_Info";
 
     static final String clint_id ="id";
     static final String clint_name ="name";
@@ -34,8 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String Create_Claint_Table = "CREATE TABLE "+TABLE_CONTACT+"( "+clint_id+" integer PRIMARY KEY, "+clint_name+" text, "+clint_password+" text, "+clint_photo+" text, "+clint_phoneNub+" text, "+clint_emerzencyPhnoeNub+" text, "+clint_emailId+" text);";
 
-    static final String Create_Event_Table="create event table "+TABLE_EventContact+"( "+event_id+"primary key "+event_name+"text "+from+"text "
-            +to+"text "+start_journey+"text "+end_journey+"text "+event_Timeline+"text " +clintEvent_id+"Secondary key "+event_Budget+"text);";
+    public static final String Create_Event_Table = "CREATE TABLE "+TABLE_Event+"( "+event_id+" integer PRIMARY KEY, "+event_name+" text, "+from+" text, "+to+" text, "+start_journey+" text, "+end_journey+" text, "+event_Budget+" text, "+clintEvent_id+" text);";
 
 
 
@@ -47,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         sqLiteDatabase.execSQL(Create_Claint_Table);
-//        sqLiteDatabase.execSQL(Create_Event_Table);
+        sqLiteDatabase.execSQL(Create_Event_Table);
 
 
     }
@@ -55,6 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("drop table if exist"+TABLE_CONTACT);
+        sqLiteDatabase.execSQL("drop table if exist"+Create_Event_Table);
         onCreate(sqLiteDatabase);
     }
 }

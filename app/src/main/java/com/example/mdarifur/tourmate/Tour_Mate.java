@@ -32,10 +32,15 @@ public class Tour_Mate extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_tour__mate);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if(null == savedInstanceState) {
 
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.content_Frame,new EventList()).commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -47,10 +52,6 @@ public class Tour_Mate extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         setField(navigationView);
         setValueToField();
-
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.content_Frame,new EventList()).commit();
-
     }
 
     @Override

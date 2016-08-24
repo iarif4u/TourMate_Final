@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,7 @@ public class EventList extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.content_Frame,new Weather()).commit();
-
+                getFragmentManager().beginTransaction().replace(R.id.content_Frame,new AddEvent()).commit();
             }
         });
         return rootView;
