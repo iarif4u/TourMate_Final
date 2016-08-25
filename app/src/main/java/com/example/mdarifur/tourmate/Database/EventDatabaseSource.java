@@ -16,12 +16,9 @@ import java.util.ArrayList;
  */
 public class EventDatabaseSource {
 
-
-
-
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
-    private Contact contact;
+    private Event_Contact eventContact;
 
     public EventDatabaseSource(Context context) {
         databaseHelper=new DatabaseHelper(context);
@@ -41,16 +38,14 @@ public class EventDatabaseSource {
 
         ContentValues contentValues=new ContentValues();
         contentValues.put(DatabaseHelper.event_name,event_contact.getEventname());
-        contentValues.put(DatabaseHelper.from,event_contact.getFrom());
         contentValues.put(DatabaseHelper.to,event_contact.getTo());
         contentValues.put(DatabaseHelper.start_journey,event_contact.getStartJourney());
         contentValues.put(DatabaseHelper.end_journey,event_contact.getEndjourney());
-        contentValues.put(DatabaseHelper.event_Timeline,event_contact.getEventtimeline());
         contentValues.put(DatabaseHelper.event_Budget,event_contact.getEventbudget());
-        contentValues.put(DatabaseHelper.clintEvent_id,event_contact.getClinteventId());
+        contentValues.put(DatabaseHelper.clintEvent_id,"1");
 
 
-        long inserted=database.insert(DatabaseHelper.TABLE_CONTACT,null,contentValues);
+        long inserted=database.insert(DatabaseHelper.TABLE_EVENT,null,contentValues);
         this.close();
         if(inserted>0){
             return true;
@@ -61,37 +56,34 @@ public class EventDatabaseSource {
 
 
 
-    public Contact getContact(int id){
+    public Event_Contact getContact(int id){
         this.open();
-
-        //nicher line ta dakhen    clint_id r por (+) diye clintEvent_id likchi aita ki hoyeche kina????????
-
-
         Cursor cursor=database.query(DatabaseHelper.TABLE_CONTACT, new String[]{DatabaseHelper.event_id, DatabaseHelper.event_name,
-                DatabaseHelper.from, DatabaseHelper.to, DatabaseHelper.start_journey, DatabaseHelper.end_journey, DatabaseHelper.event_Timeline,
+                DatabaseHelper.to, DatabaseHelper.start_journey, DatabaseHelper.end_journey,
                 DatabaseHelper.event_Budget}, DatabaseHelper.clint_id + DatabaseHelper.clintEvent_id +" = " + id, null, null, null, null);
 
         cursor.moveToFirst();
         int mId=cursor.getInt(cursor.getColumnIndex(DatabaseHelper.event_id));
         String mName=cursor.getString(cursor.getColumnIndex(DatabaseHelper.event_name));
-        String mForm=cursor.getString(cursor.getColumnIndex(DatabaseHelper.from));
+
         String mTo=cursor.getString(cursor.getColumnIndex(DatabaseHelper.to));
         String mStartJourney=cursor.getString(cursor.getColumnIndex(DatabaseHelper.start_journey));
         String mEndJourney=cursor.getString(cursor.getColumnIndex(DatabaseHelper.end_journey));
-        String mEventTimeline=cursor.getString(cursor.getColumnIndex(DatabaseHelper.event_Timeline));
+
         String mEvent_budget=cursor.getString(cursor.getColumnIndex(DatabaseHelper.event_Budget));
         int mClint_event_id=cursor.getInt(cursor.getColumnIndex(DatabaseHelper.clintEvent_id));
 
         cursor.close();
        // contact=new Contact(mId,mClint_event_id,mName,mForm,mTo,mStartJourney,mEndJourney,mEventTimeline,mEvent_budget);
         this.close();
-        return contact;
+        return eventContact;
     }
 
-    public ArrayList<Contact> getAllContact(){
-        ArrayList<Contact>contacts=new ArrayList<>();
+    public ArrayList<Event_Contact> getEvent(String id){
+
+        ArrayList<Event_Contact>events=new ArrayList<>();
         this.open();
-        Cursor cursor=database.rawQuery("select * from "+DatabaseHelper.TABLE_CONTACT,null);
+        Cursor cursor=database.rawQuery("SELECT * FROM "+DatabaseHelper.TABLE_EVENT+" WHERE "+DatabaseHelper.clintEvent_id+" = ?", new String[]{id});
 
         if(cursor!=null && cursor.getCount()>0){
             cursor.moveToFirst();
@@ -99,23 +91,19 @@ public class EventDatabaseSource {
             for(int i=0;i<cursor.getCount();i++){
                 int mId=cursor.getInt(cursor.getColumnIndex(DatabaseHelper.event_id));
                 String mName=cursor.getString(cursor.getColumnIndex(DatabaseHelper.event_name));
-                String mForm=cursor.getString(cursor.getColumnIndex(DatabaseHelper.from));
                 String mTo=cursor.getString(cursor.getColumnIndex(DatabaseHelper.to));
                 String mStartJourney=cursor.getString(cursor.getColumnIndex(DatabaseHelper.start_journey));
                 String mEndJourney=cursor.getString(cursor.getColumnIndex(DatabaseHelper.end_journey));
-                String mEventTimeline=cursor.getString(cursor.getColumnIndex(DatabaseHelper.event_Timeline));
                 String mEvent_budget=cursor.getString(cursor.getColumnIndex(DatabaseHelper.event_Budget));
                 int mClint_event_id=cursor.getInt(cursor.getColumnIndex(DatabaseHelper.clintEvent_id));
-
-
-                //contact=new Contact(mId,mClint_event_id,mName,mForm,mTo,mStartJourney,mEndJourney,mEventTimeline,mEvent_budget);
-                contacts.add(contact);
+                eventContact=new Event_Contact(mId, mName, mTo, mStartJourney,mEndJourney,mEvent_budget,String.valueOf(mClint_event_id));
+                events.add(eventContact);
                 cursor.moveToNext();
             }
         }
         cursor.close();
         this.close();
-        return contacts;
+        return events;
     }
 
     public boolean updateContact(int id,Event_Contact event_contact){
@@ -123,11 +111,11 @@ public class EventDatabaseSource {
 
         ContentValues contentValues=new ContentValues();
         contentValues.put(DatabaseHelper.event_name,event_contact.getEventname());
-        contentValues.put(DatabaseHelper.from,event_contact.getFrom());
+
         contentValues.put(DatabaseHelper.to,event_contact.getTo());
         contentValues.put(DatabaseHelper.start_journey,event_contact.getStartJourney());
         contentValues.put(DatabaseHelper.end_journey,event_contact.getEndjourney());
-        contentValues.put(DatabaseHelper.event_Timeline,event_contact.getEventtimeline());
+
         contentValues.put(DatabaseHelper.event_Budget,event_contact.getEventbudget());
 
 
@@ -144,17 +132,12 @@ public class EventDatabaseSource {
         }else {
             return false;
         }
-
     }
 
     public boolean deleteContact(int id){
         this.open();
-
-        //Akhaneo same obostha check koren
-
         int deleted=database.delete(DatabaseHelper.TABLE_CONTACT, DatabaseHelper.clint_id +DatabaseHelper.clintEvent_id +
                 " = " + id, null);
-
         this.close();
 
         if(deleted>0){
@@ -163,6 +146,4 @@ public class EventDatabaseSource {
             return false;
         }
     }
-
-
 }

@@ -7,36 +7,33 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by hp on 8/11/2016.
  */
-public class DatabaseHelper extends SQLiteOpenHelper{
-    static final String DATABASE_NAME="contact_manager";
-    static final int DATABASE_VERSION=1;
-    static final String TABLE_CONTACT="contact_info";
-    static final String TABLE_Event="event_Info";
+public class DatabaseHelper extends SQLiteOpenHelper {
 
-    static final String clint_id ="id";
-    static final String clint_name ="name";
-    static final String clint_password ="password";
-    static final String clint_photo ="photo";
-    static final String clint_phoneNub ="PhoneNub";
-    static final String clint_emailId ="emailId";
-    static final String clint_emerzencyPhnoeNub="emerzencyPhnoeNub";
+    static final String DATABASE_NAME = "contact_manager";
+    static final int DATABASE_VERSION = 1;
+    static final String TABLE_CONTACT = "contact_info";
+    static final String TABLE_EVENT = "event_Info";
 
-    static final String event_id ="eventid";
-    static final String event_name ="event_name";
-    static final String from ="from";
-    static final String to ="to";
-    static final String start_journey ="startjourney";
-    static final String end_journey ="endjourney";
-    static final String event_Timeline ="timeline";
-    static final String event_Budget ="budget";
-    static final String clintEvent_id="id";
+    static final String clint_id = "id";
+    static final String clint_name = "name";
+    static final String clint_password = "password";
+    static final String clint_photo = "photo";
+    static final String clint_phoneNub = "PhoneNub";
+    static final String clint_emailId = "emailId";
+    static final String clint_emerzencyPhnoeNub = "emerzencyPhnoeNub";
 
-
-    public static final String Create_Claint_Table = "CREATE TABLE "+TABLE_CONTACT+"( "+clint_id+" integer PRIMARY KEY, "+clint_name+" text, "+clint_password+" text, "+clint_photo+" text, "+clint_phoneNub+" text, "+clint_emerzencyPhnoeNub+" text, "+clint_emailId+" text);";
-
-    public static final String Create_Event_Table = "CREATE TABLE "+TABLE_Event+"( "+event_id+" integer PRIMARY KEY, "+event_name+" text, "+from+" text, "+to+" text, "+start_journey+" text, "+end_journey+" text, "+event_Budget+" text, "+clintEvent_id+" text);";
+    static final String event_id = "eventid";
+    static final String event_name = "event_name";
+    static final String to = "to_place";
+    static final String start_journey = "startjourney";
+    static final String end_journey = "endjourney";
+    static final String event_Budget = "budget";
+    static final String clintEvent_id = "id";
 
 
+    public static final String Create_Claint_Table = "CREATE TABLE " + TABLE_CONTACT + "( " + clint_id + " integer PRIMARY KEY, " + clint_name + " text, " + clint_password + " text, " + clint_photo + " text, " + clint_phoneNub + " text, " + clint_emerzencyPhnoeNub + " text, " + clint_emailId + " text);";
+
+    public static final String Create_Event_Table = "CREATE TABLE " + TABLE_EVENT + "( " + event_id + " integer PRIMARY KEY, " + event_name + " text, " + to + " text, " + start_journey + " text, " + end_journey + " text, " + event_Budget + " text, " + clintEvent_id + " text);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,17 +41,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
-        sqLiteDatabase.execSQL(Create_Claint_Table);
         sqLiteDatabase.execSQL(Create_Event_Table);
-
-
+        sqLiteDatabase.execSQL(Create_Claint_Table);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("drop table if exist"+TABLE_CONTACT);
-        sqLiteDatabase.execSQL("drop table if exist"+Create_Event_Table);
+        sqLiteDatabase.execSQL("drop table if exist" + TABLE_CONTACT);
+        sqLiteDatabase.execSQL("drop table if exist" + TABLE_EVENT);
         onCreate(sqLiteDatabase);
     }
 }

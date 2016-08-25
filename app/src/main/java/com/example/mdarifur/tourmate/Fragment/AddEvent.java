@@ -14,7 +14,11 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mdarifur.tourmate.Constant.Constant;
+import com.example.mdarifur.tourmate.Database.EventDatabaseSource;
 import com.example.mdarifur.tourmate.Is_Valid;
+import com.example.mdarifur.tourmate.Model.Event_Contact;
+import com.example.mdarifur.tourmate.Preference;
 import com.example.mdarifur.tourmate.R;
 import com.example.mdarifur.tourmate.TimeAndDate.DateOperation;
 
@@ -28,7 +32,10 @@ import java.util.Date;
  */
 
 public class AddEvent extends Fragment {
+    private EventDatabaseSource eventDatabaseSource;
+    Preference preference;
     DateOperation dateOperation;
+
     Is_Valid isValid;
     Button addEventBT;
     TextView eventNameET, toET, startjourneyET, endjourneyET, budgetET;
@@ -48,6 +55,8 @@ public class AddEvent extends Fragment {
     private void getInstance(View rootView) {
         isValid = new Is_Valid(getActivity());
         dateOperation  = new DateOperation();
+        eventDatabaseSource = new EventDatabaseSource(getActivity());
+        preference = new Preference(getActivity());
         eventNameET = (TextView) rootView.findViewById(R.id.evetNameET);
         toET = (TextView) rootView.findViewById(R.id.toET);
         startjourneyET = (TextView) rootView.findViewById(R.id.startjourneyET);
@@ -59,7 +68,14 @@ public class AddEvent extends Fragment {
             public void onClick(View view) {
                 setInstance();
                 if(isValid.CheckEventData(eventName,to,startjourney,endjourney,budget)){
-                    Toast.makeText(getActivity(), "Every thing is ok", Toast.LENGTH_LONG).show();
+                    String user_id = preference.getUserData(Constant.ID);
+                    boolean is_insert = eventDatabaseSource.addContact(new Event_Contact(eventName,to,startjourney,endjourney,budget,user_id));
+                   // Toast.makeText(getActivity(), String.valueOf(is_insert), Toast.LENGTH_SHORT).show();
+                    if(is_insert==true){
+                        Toast.makeText(getActivity(), "Tour Event Add Successfully:", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "Fail to add event", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }

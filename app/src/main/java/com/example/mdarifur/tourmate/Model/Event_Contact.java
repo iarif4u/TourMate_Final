@@ -7,11 +7,9 @@ public class Event_Contact {
 
     private int eventid;
     private String eventname;
-    private String from;
     private String to;
     private String startJourney;
     private String endjourney;
-    private String eventtimeline;
     private String eventbudget;
     private String clinteventId;
 
@@ -19,14 +17,21 @@ public class Event_Contact {
     public Event_Contact() {
     }
 
-    public Event_Contact(int eventid, String eventname, String from, String to, String startJourney, String endjourney, String eventtimeline, String eventbudget, String clinteventId) {
-        this.eventid = eventid;
+    public Event_Contact(String eventname, String to, String startJourney, String endjourney, String eventbudget, String clinteventId) {
         this.eventname = eventname;
-        this.from = from;
         this.to = to;
         this.startJourney = startJourney;
         this.endjourney = endjourney;
-        this.eventtimeline = eventtimeline;
+        this.eventbudget = eventbudget;
+        this.clinteventId = clinteventId;
+    }
+
+    public Event_Contact(int eventid, String eventname, String to, String startJourney, String endjourney, String eventbudget, String clinteventId) {
+        this.eventid = eventid;
+        this.eventname = eventname;
+        this.to = to;
+        this.startJourney = startJourney;
+        this.endjourney = endjourney;
         this.eventbudget = eventbudget;
         this.clinteventId = clinteventId;
     }
@@ -40,7 +45,6 @@ public class Event_Contact {
     }
 
     public String getEventname() {
-
         return eventname;
     }
 
@@ -48,13 +52,6 @@ public class Event_Contact {
         this.eventname = eventname;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
 
     public String getTo() {
         return to;
@@ -80,13 +77,6 @@ public class Event_Contact {
         this.endjourney = endjourney;
     }
 
-    public String getEventtimeline() {
-        return eventtimeline;
-    }
-
-    public void setEventtimeline(String eventtimeline) {
-        this.eventtimeline = eventtimeline;
-    }
 
     public String getClinteventId() {
         return clinteventId;
