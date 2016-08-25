@@ -1,6 +1,7 @@
 package com.example.mdarifur.tourmate.Fragment;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -72,7 +74,9 @@ public class AddEvent extends Fragment {
                     boolean is_insert = eventDatabaseSource.addContact(new Event_Contact(eventName,to,startjourney,endjourney,budget,user_id));
                    // Toast.makeText(getActivity(), String.valueOf(is_insert), Toast.LENGTH_SHORT).show();
                     if(is_insert==true){
+                        hideSoftKeyboard(getActivity());
                         Toast.makeText(getActivity(), "Tour Event Add Successfully:", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.content_Frame, new EventList()).commit();
                     }else{
                         Toast.makeText(getActivity(), "Fail to add event", Toast.LENGTH_SHORT).show();
                     }
@@ -138,5 +142,12 @@ public class AddEvent extends Fragment {
         startjourney = startjourneyET.getText().toString();
         endjourney = endjourneyET.getText().toString();
         budget = budgetET.getText().toString();
+    }
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 }
