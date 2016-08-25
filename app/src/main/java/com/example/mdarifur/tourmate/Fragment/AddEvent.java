@@ -14,7 +14,9 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mdarifur.tourmate.Is_Valid;
 import com.example.mdarifur.tourmate.R;
+import com.example.mdarifur.tourmate.TimeAndDate.DateOperation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,14 +26,17 @@ import java.util.Date;
 /**
  * Created by MD.Arifur on 8/24/2016.
  */
-@TargetApi(Build.VERSION_CODES.N)
+
 public class AddEvent extends Fragment {
-    Calendar c;
-    int year,month,day;
+    DateOperation dateOperation;
+    Is_Valid isValid;
     Button addEventBT;
-    TextView eventNameET,toET,startjourneyET,endjourneyET,budgetET;
-    String eventName,to,startjourney,endjourney,budget;
+    TextView eventNameET, toET, startjourneyET, endjourneyET, budgetET;
+    String eventName, to, startjourney, endjourney, budget;
+    long Stat_timeStamp = 0;
+    long end_timeStamp = 0;
     View rootView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +44,10 @@ public class AddEvent extends Fragment {
         getInstance(rootView);
         return rootView;
     }
-    private void getInstance(View rootView){
+
+    private void getInstance(View rootView) {
+        isValid = new Is_Valid(getActivity());
+        dateOperation  = new DateOperation();
         eventNameET = (TextView) rootView.findViewById(R.id.evetNameET);
         toET = (TextView) rootView.findViewById(R.id.toET);
         startjourneyET = (TextView) rootView.findViewById(R.id.startjourneyET);
@@ -50,63 +58,69 @@ public class AddEvent extends Fragment {
             @Override
             public void onClick(View view) {
                 setInstance();
-                Toast.makeText(getActivity(), eventName+" "+to, Toast.LENGTH_LONG).show();
+                if(isValid.CheckEventData(eventName,to,startjourney,endjourney,budget)){
+                    Toast.makeText(getActivity(), "Every thing is ok", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
         startjourneyET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SetUpDatePicker();
-                DatePickerDialog datePicker =new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                dateOperation.SetUpDatePicker();
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
 
-                        String start = String.valueOf(i2)+"-"+String.valueOf(i1+1)+"-"+String.valueOf(i);
-                        long SelecttimeSpamp =getTimestamp(start);
-                        long CurrenttimeSpamp =getTimestamp(getCurrentDate());
-                        String res ="";
-                        if(CurrenttimeSpamp<=SelecttimeSpamp){
-                            startjourneyET.setText(start);
-                        }else{
-                            Toast.makeText(getActivity(),"You can't select any previous day", Toast.LENGTH_LONG).show();
+                        String startJourney = String.valueOf(i2) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i);
+                        Stat_timeStamp = dateOperation.getTimestamp(startJourney);
+                        long CurrenttimeSpamp = dateOperation.getTimestamp(dateOperation.getCurrentDate());
+                        if (CurrenttimeSpamp <= Stat_timeStamp) {
+                            startjourneyET.setText(startJourney);
+                        } else {
+                            Toast.makeText(getActivity(), "You can't select any previous day", Toast.LENGTH_LONG).show();
                             startjourneyET.setText("");
                         }
                     }
-                },year,month,day);
+                }, dateOperation.getYear(), dateOperation.getMonth(), dateOperation.getDay());
                 datePicker.setTitle("Select Date");
                 datePicker.show();
             }
         });
+
+        endjourneyET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Stat_timeStamp == 0) {
+                    Toast.makeText(getActivity(), "First Select your Start journey date", Toast.LENGTH_LONG).show();
+                } else {
+                    dateOperation.SetUpDatePicker();
+                    DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                            String endJourney = String.valueOf(i2) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i);
+                            end_timeStamp = dateOperation.getTimestamp(endJourney);
+                            if (Stat_timeStamp <= end_timeStamp) {
+                                endjourneyET.setText(endJourney);
+                            } else {
+                                Toast.makeText(getActivity(), "You can't select the day", Toast.LENGTH_LONG).show();
+                                endjourneyET.setText("");
+                            }
+                        }
+                    }, dateOperation.getYear(), dateOperation.getMonth(), dateOperation.getDay());
+                    datePicker.setTitle("Select Date");
+                    datePicker.show();
+                }
+            }
+        });
     }
 
-    private void SetUpDatePicker(){
-        c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
-    }
-
-    private void setInstance(){
+    private void setInstance() {
         eventName = eventNameET.getText().toString();
         to = toET.getText().toString();
         startjourney = startjourneyET.getText().toString();
         endjourney = endjourneyET.getText().toString();
         budget = budgetET.getText().toString();
-    }
-    public String getCurrentDate(){
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        return df.format(c.getTime());
-    }
-    public long getTimestamp(String str_date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(str_date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date.getTime();
     }
 }

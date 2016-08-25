@@ -22,6 +22,36 @@ public class Is_Valid {
         return email.matches(emailregex);
     }
 
+    public boolean CheckEventData(String eventName,String to, String startJourney, String stopJourney,String budget){
+
+        String message = "";
+        boolean returnValue=false;
+        if (getLength(eventName)<3){
+            returnValue = false;
+            message = message+"Event Name ";
+        }if (getLength(to)<3){
+            returnValue = false;
+            message = message+"To ";
+        }if (getLength(startJourney)<3){
+            returnValue = false;
+            message = message+"Start Journey Date ";
+        }if (getLength(stopJourney)<3){
+            returnValue = false;
+            message = message+"End Journey Date ";
+        }if(getLength(stopJourney)<3){
+            returnValue = false;
+            message = message+"Budget ";
+        }
+        if(getLength(message)>4){
+            Toast.makeText(context, message+"is not valid", Toast.LENGTH_LONG).show();
+            setInfo = "";
+        }else{
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
+
 
     public boolean CheckData(String userName, String password, String email, String phone) {
         if (getLength(userName)<4){
