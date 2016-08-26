@@ -28,7 +28,7 @@ public class Signup_activity extends AppCompatActivity {
     private ContactDatabaseSource contactDatabaseSource;
     private Is_Valid isValid;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int RESULT_LOAD_IMAGE = 2;
     private boolean isCamera,result;
     private EditText usernameET,passwordET,emailET,phoneET,emergencyET;
     private String userName,email,passWord,phone,imageName,emergency;
@@ -82,15 +82,22 @@ public class Signup_activity extends AppCompatActivity {
             }
         } else {
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
+
+
+                Uri URI = data.getData();
+                String[] FILE = { MediaStore.Images.Media.DATA };
+
+
+                Cursor cursor = getContentResolver().query(URI,
+                        FILE, null, null, null);
+
                 cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String picturePath = cursor.getString(columnIndex);
+
+                int columnIndex = cursor.getColumnIndex(FILE[0]);
+              String  ImageDecode = cursor.getString(columnIndex);
                 cursor.close();
-                bitmapImg = BitmapFactory.decodeFile(picturePath);
+
+                bitmapImg = BitmapFactory.decodeFile(ImageDecode);
                 profile_image.setImageBitmap(ImageResize.scaleDown(bitmapImg,620,true));
             }
         }
@@ -98,8 +105,7 @@ public class Signup_activity extends AppCompatActivity {
 
     public void PickFromGallery(View view) {
         isCamera = false;
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
+        Intent i = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }

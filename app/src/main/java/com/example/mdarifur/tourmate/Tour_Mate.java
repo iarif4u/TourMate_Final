@@ -1,6 +1,9 @@
 package com.example.mdarifur.tourmate;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,7 +30,8 @@ public class Tour_Mate extends AppCompatActivity
     ImageView profilePhoto;
     Preference preference;
     String id, username, email, phone, emerzency, image;
-    String TAG="Image Tag: ";
+    String TAG = "Image Tag: ";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +40,10 @@ public class Tour_Mate extends AppCompatActivity
         setContentView(R.layout.activity_tour__mate);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(null == savedInstanceState) {
+        if (null == savedInstanceState) {
 
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.content_Frame,new EventList()).commit();
+            fm.beginTransaction().replace(R.id.content_Frame, new EventList()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -56,12 +60,9 @@ public class Tour_Mate extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_Frame, new EventList()).commit();
+
     }
 
 
@@ -74,7 +75,7 @@ public class Tour_Mate extends AppCompatActivity
         image = preference.getUserData(Constant.IMAGE);
         userNamePro.setText(username);
         emailPro.setText(email);
-        if(image != null && !image.isEmpty()) {
+        if (image != null && !image.isEmpty()) {
             profilePhoto.setImageBitmap(FileSystem.decodeBase64(image));
         } else {
             Toast.makeText(this, "Yet, Profile photo doesn't set", Toast.LENGTH_SHORT).show();
@@ -118,21 +119,32 @@ public class Tour_Mate extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            fragmentManager.beginTransaction().replace(R.id.content_Frame,new EventList()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_Frame, new EventList()).commit();
         } else if (id == R.id.nav_gallery) {
-
+            fragmentManager.beginTransaction().replace(R.id.content_Frame, new Weather()).commit();
         } else if (id == R.id.nav_slideshow) {
-            fragmentManager.beginTransaction().replace(R.id.content_Frame,new Weather()).commit();
-        } else if (id == R.id.nav_manage) {
-            fragmentManager.beginTransaction().replace(R.id.content_Frame,new EventList()).commit();
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-            fragmentManager.beginTransaction().replace(R.id.content_Frame,new Weather()).commit();
+        } else if (id == R.id.nav_logout) {
+            preference.saveLoginData(Constant.IS_LOGIN, false);
+            preference.saveUserData(Constant.ID, "");
+            preference.saveUserData(Constant.EMAIL, "");
+            preference.saveUserData(Constant.NAME, "");
+            preference.saveUserData(Constant.PHONE, "");
+            preference.saveUserData(Constant.IMAGE, "");
+            preference.saveUserData(Constant.EMERZENCY, "");
+            Intent logOutSuccess = new Intent(this, Login_activity.class);
+            startActivity(logOutSuccess);
+        } else if (id == R.id.nav_exit) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

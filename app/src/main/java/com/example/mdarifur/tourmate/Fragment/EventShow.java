@@ -1,23 +1,27 @@
 package com.example.mdarifur.tourmate.Fragment;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mdarifur.tourmate.Adapter.TimeLine_Adapter;
 import com.example.mdarifur.tourmate.Constant.Constant;
 import com.example.mdarifur.tourmate.Database.PhotoDataSource;
-import com.example.mdarifur.tourmate.FileOperation.FileSystem;
-import com.example.mdarifur.tourmate.Model.Event_Contact;
 import com.example.mdarifur.tourmate.Model.PhotoData;
 import com.example.mdarifur.tourmate.Preference;
 import com.example.mdarifur.tourmate.R;
+import com.example.mdarifur.tourmate.TimeAndDate.DateOperation;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,7 @@ public class EventShow extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_event_show, container, false);
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabevent);
         FloatingActionButton spendFAP = (FloatingActionButton) rootView.findViewById(R.id.spendFAP);
+
         preference = new Preference(getActivity());
         photoDataSource = new PhotoDataSource(getActivity());
         photoDataSourceList = photoDataSource.getTimeLine(preference.getUserData(Constant.EVENT_ID));
@@ -68,10 +73,30 @@ public class EventShow extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    getFragmentManager().beginTransaction().replace(R.id.content_Frame, new TakePhoto()).commit();
+                    if(isUpdate()==true) {
+                        getFragmentManager().beginTransaction().replace(R.id.content_Frame, new TakePhoto()).commit();
+                    }else {
+                        Toast.makeText(getActivity(), "Sorry, you can't add anything to timeline", Toast.LENGTH_SHORT).show();
+                    }
             }
         });
         return rootView;
     }
+    private boolean isUpdate() {
+        DateOperation dateOperation = new DateOperation();
+        String current = dateOperation.getCurrentDate();
+        String start = preference.getUserData(Constant.START_JOURNEY);
+        String end = preference.getUserData(Constant.END_JOURNEY);
+        long currentTimeStamp = dateOperation.getTimestamp(current);
+        long startTimeStamp = dateOperation.getTimestamp(start);
+        long endTimeStamp = dateOperation.getTimestamp(end);
+        if (startTimeStamp <= currentTimeStamp && currentTimeStamp <= endTimeStamp) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
 }

@@ -168,12 +168,6 @@
                     android:src="@drawable/camera"
                     android:textSize="25sp" />
 
-                <ImageView
-                    android:layout_width="100sp"
-                    android:layout_height="60sp"
-                    android:onClick="PickFromGallery"
-                    android:src="@drawable/gallery"
-                    android:textSize="25sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="15sp"

@@ -1,11 +1,8 @@
 package com.example.mdarifur.tourmate.Interface;
 
-
-import com.example.mdarifur.tourmate.WeatherModel.currentWeather.CurrentWeather;
-import com.example.mdarifur.tourmate.WeatherModel.forecast.Forecast;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 
@@ -14,10 +11,5 @@ import retrofit2.http.Url;
  */
 public interface API_Interface {
 
-    @GET
-    Call<CurrentWeather> getCurrentWeather(@Url String url);
 
-
-    @GET
-    Call<Forecast> getForecastWeather(@Url String url);
 }
