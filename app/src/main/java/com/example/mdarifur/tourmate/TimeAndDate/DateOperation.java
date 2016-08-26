@@ -24,6 +24,12 @@ public class DateOperation {
         return day;
     }
 
+    public String getCurrentTime(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+        return df.format(c.getTime());
+    }
+
     public String getCurrentDate() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");

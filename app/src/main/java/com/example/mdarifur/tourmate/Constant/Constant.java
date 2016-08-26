@@ -25,4 +25,7 @@ public class Constant {
     public static final String EVENT_BUDGET = "budget";
     public static final String CLIENT_EVENT_ID = "id";
 
+
+    public static final String PHOTO_TEMP = "photo_temp";
+
 }

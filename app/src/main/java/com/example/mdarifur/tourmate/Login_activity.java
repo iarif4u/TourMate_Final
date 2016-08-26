@@ -17,13 +17,13 @@ public class Login_activity extends AppCompatActivity {
     private String usernameLI,passwordLI;
     private ContactDatabaseSource contactDatabaseSource;
     private Contact contact;
-    Intent loginSuccess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
         getVariable();
         if(preference.getLoginData(Constant.IS_LOGIN)==true){
+            Intent loginSuccess = new Intent(this,Tour_Mate.class);
             startActivity(loginSuccess);
         }
     }
@@ -32,7 +32,7 @@ public class Login_activity extends AppCompatActivity {
         usernameLET = (EditText) findViewById(R.id.usernameLET);
         passwordLET = (EditText) findViewById(R.id.passwordLET);
         preference = new Preference(this);
-        loginSuccess = new Intent(this,Tour_Mate.class);
+
     }
 
     public void SignupAcc(View view) {
@@ -55,6 +55,7 @@ public class Login_activity extends AppCompatActivity {
             preference.saveUserData(Constant.IMAGE,contact.getPhoto());
             preference.saveUserData(Constant.EMERZENCY,contact.getEmerzencyPhnoeNub());
             Toast.makeText(Login_activity.this,"Login Success", Toast.LENGTH_SHORT).show();
+            Intent loginSuccess = new Intent(this,Tour_Mate.class);
             startActivity(loginSuccess);
         }
 

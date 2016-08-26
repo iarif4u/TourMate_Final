@@ -59,7 +59,7 @@ public class EventList extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.content_Frame, new AddEvent()).commit();
+               getFragmentManager().beginTransaction().replace(R.id.content_Frame, new AddEvent()).commit();
             }
         });
         return rootView;
